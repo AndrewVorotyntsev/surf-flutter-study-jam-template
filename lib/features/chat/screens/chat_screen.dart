@@ -228,6 +228,7 @@ class _ChatAvatar extends StatelessWidget {
       width: _size,
       height: _size,
       child: Material(
+        // Используем хэш от каждого имени чтобы однозначно определить цвет
         color: Color(userData.name.hashCode),//colorScheme.primary,
         shape: const CircleBorder(),
         child: Center(
@@ -236,7 +237,7 @@ class _ChatAvatar extends StatelessWidget {
                 ? '${userData.name!.split(' ').first[0]}${userData.name!.split(' ').last != '' ? userData.name!.split(' ').last[0] : ""}'
                 : '?',
             style: TextStyle(
-              color: Colors.black,//colorScheme.onPrimary,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 24,
             ),
