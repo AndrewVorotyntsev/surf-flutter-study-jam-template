@@ -229,7 +229,7 @@ class _ChatAvatar extends StatelessWidget {
       height: _size,
       child: Material(
         // Используем хэш от каждого имени чтобы однозначно определить цвет
-        color: Color(userData.name.hashCode),//colorScheme.primary,
+        color: Color(userData.name.hashCode),
         shape: const CircleBorder(),
         child: Center(
           child: Text(
