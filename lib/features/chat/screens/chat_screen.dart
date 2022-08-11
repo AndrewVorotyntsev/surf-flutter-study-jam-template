@@ -4,6 +4,7 @@ import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_loc
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_local_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
+import 'package:bubble/bubble.dart';
 
 /// Main screen of chat app, containing messages.
 class ChatScreen extends StatefulWidget {
@@ -168,8 +169,9 @@ class _ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Material(
-      color: chatData.chatUserDto is ChatUserLocalDto ? colorScheme.primary.withOpacity(.1) : null,
+    return Bubble(
+      margin: BubbleEdges.all(10),
+      nip: chatData.chatUserDto is ChatUserLocalDto ? BubbleNip.rightBottom : BubbleNip.leftBottom,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 18,
@@ -193,7 +195,14 @@ class _ChatMessage extends StatelessWidget {
                 ],
               ),
             ),
-            chatData is ChatMessageGeolocationDto ? IconButton(icon: Icon(Icons.pin_drop), onPressed: () { print('icon'); },) : SizedBox.shrink()
+            chatData is ChatMessageGeolocationDto
+                ? IconButton(
+                    icon: Icon(Icons.pin_drop),
+                    onPressed: () {
+                      print('icon');
+                    },
+                  )
+                : SizedBox.shrink()
           ],
         ),
       ),
