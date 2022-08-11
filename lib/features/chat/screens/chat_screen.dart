@@ -5,6 +5,7 @@ import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_dto.da
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_local_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:bubble/bubble.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Main screen of chat app, containing messages.
 class ChatScreen extends StatefulWidget {
@@ -198,8 +199,17 @@ class _ChatMessage extends StatelessWidget {
             chatData is ChatMessageGeolocationDto
                 ? IconButton(
                     icon: Icon(Icons.pin_drop),
-                    onPressed: () {
-                      print('icon');
+                    onPressed: () async {
+                      ChatMessageGeolocationDto data = chatData as ChatMessageGeolocationDto;
+                      double lat = data.location.latitude;
+                      double lon = data.location.longitude;
+
+                      final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
+                      if (await canLaunch(url)) {
+                      await launch(url);
+                      } else {
+                      throw 'Could not launch $url';
+                      }
                     },
                   )
                 : SizedBox.shrink()

@@ -17,6 +17,7 @@ dependencies:
   surf_mwwm: ^2.0.1
   shared_preferences: ^2.0.15
   bubble: ^1.2.1
+  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:
