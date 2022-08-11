@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_dto.dart';
+import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_location_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_user_local_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
@@ -192,6 +193,7 @@ class _ChatMessage extends StatelessWidget {
                 ],
               ),
             ),
+            chatData is ChatMessageGeolocationDto ? IconButton(icon: Icon(Icons.pin_drop), onPressed: () { print('icon'); },) : SizedBox.shrink()
           ],
         ),
       ),
