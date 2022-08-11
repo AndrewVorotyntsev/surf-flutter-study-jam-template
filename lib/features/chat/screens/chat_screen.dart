@@ -187,7 +187,7 @@ class _ChatMessage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    chatData.chatUserDto.name ?? '',
+                    chatData.chatUserDto.name ?? 'Аноним',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
@@ -234,7 +234,7 @@ class _ChatAvatar extends StatelessWidget {
           child: Text(
             userData.name != null
                 ? '${userData.name!.split(' ').first[0]}${userData.name!.split(' ').last != '' ? userData.name!.split(' ').last[0] : ""}'
-                : '',
+                : '?',
             style: TextStyle(
               color: colorScheme.onPrimary,
               fontWeight: FontWeight.bold,
