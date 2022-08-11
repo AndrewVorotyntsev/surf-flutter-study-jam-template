@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_mwwm/surf_mwwm.dart';
+import 'package:surf_practice_chat_flutter/features/auth/exceptions/auth_exception.dart';
 import 'package:surf_practice_chat_flutter/features/auth/repository/auth_repository.dart';
 import 'package:surf_practice_chat_flutter/features/auth/models/token_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// [WidgetModel] для [AuthScreen]
 class AuthScreenWidgetModel extends WidgetModel {
   final NavigatorState _navigator;
+  final BuildContext context;
   final IAuthRepository repository;
 
   final TextEditingController loginController = TextEditingController();
@@ -19,6 +21,7 @@ class AuthScreenWidgetModel extends WidgetModel {
     WidgetModelDependencies dependencies,
     this._navigator,
     this.repository,
+    this.context,
   ) : super(dependencies);
 
   @override
@@ -35,12 +38,19 @@ class AuthScreenWidgetModel extends WidgetModel {
     try {
       String login = loginController.text;
       String password = passwordController.text;
-      TokenDto token = await repository.signIn(login: login, password: password);
+      TokenDto token =
+          await repository.signIn(login: login, password: password);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token.token);
 
       _pushToChat(token);
-    } on Exception catch (e) {
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        // TODO: добавить дизайн
+        SnackBar(
+          content: Text(e.message),
+        ),
+      );
       print(e);
       // TODO показать снэк
     }

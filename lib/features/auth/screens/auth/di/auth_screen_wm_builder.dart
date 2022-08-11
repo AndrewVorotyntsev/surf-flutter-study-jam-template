@@ -17,5 +17,6 @@ AuthScreenWidgetModel createAuthScreenWidgetModel(
     wmDependencies,
     navigator,
     repository,
+    context
   );
 }
