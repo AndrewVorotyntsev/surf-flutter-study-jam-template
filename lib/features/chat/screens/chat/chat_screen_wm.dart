@@ -8,8 +8,8 @@ class ChatScreenWidgetModel extends WidgetModel {
   final NavigatorState _navigator;
   final IChatRepository chatRepository;
   final nameEditingController = TextEditingController();
-  final currentMessages =
-  EntityStreamedState<Iterable<ChatMessageDto>>(const EntityState.loading([]));
+  final currentMessages = EntityStreamedState<Iterable<ChatMessageDto>>(
+      const EntityState.loading([]));
 
   int? id;
 
@@ -17,7 +17,7 @@ class ChatScreenWidgetModel extends WidgetModel {
     WidgetModelDependencies dependencies,
     this._navigator,
     this.chatRepository,
-      this.id,
+    this.id,
   ) : super(dependencies);
 
   @override
@@ -33,12 +33,12 @@ class ChatScreenWidgetModel extends WidgetModel {
   }
 
   Future<void> onUpdatePressed() async {
-    final messages = await chatRepository.getMessages();
+    final messages = await chatRepository.getMessages(id: id);
     currentMessages.content(messages);
   }
 
   Future<void> onSendPressed(String messageText) async {
-    final messages = await chatRepository.sendMessage(messageText);
+    final messages = await chatRepository.sendMessage(messageText, id: id);
     currentMessages.content(messages);
   }
 }

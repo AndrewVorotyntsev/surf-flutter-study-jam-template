@@ -52,12 +52,13 @@ class TopicsListScreenWidgetModel extends WidgetModel {
     );
   }
 
-  void pushToChat() {
+  void pushToChat(int? id) {
     _navigator.push(
       MaterialPageRoute(
         builder: (_) {
           return ChatScreen(
             chatRepository: chatRepository,
+            id: id,
           );
         },
       ),

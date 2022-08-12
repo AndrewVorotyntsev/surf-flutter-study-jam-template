@@ -70,6 +70,7 @@ class _TopicsListScreenState
                           ? Text(
                               '${wm.currentTopics.value.data?.elementAt(index).description}')
                           : null,
+                      onTap: () => wm.pushToChat(wm.currentTopics.value.data?.elementAt(index).id),
                     ),
                   );
                 }),

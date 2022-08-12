@@ -19,7 +19,7 @@ class ChatScreen extends CoreMwwmWidget<ChatScreenWidgetModel> {
           widgetModelBuilder: (context) => createChatScreenWidgetModel(
             context,
             chatRepository,
-              id,
+            id,
           ),
         );
 

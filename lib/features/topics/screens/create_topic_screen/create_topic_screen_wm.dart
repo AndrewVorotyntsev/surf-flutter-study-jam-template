@@ -38,6 +38,7 @@ class CreateTopicScreenWidgetModel extends WidgetModel {
           description: topicDescription,
         ),
       );
+      _navigator.pop();
     } on Exception catch (e) {
       print(e);
     }
