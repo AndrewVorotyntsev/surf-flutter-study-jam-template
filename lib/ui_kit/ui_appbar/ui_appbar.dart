@@ -9,11 +9,13 @@ class UiAppbar extends CoreMwwmWidget<UiAppbarWidgetModel> {
   UiAppbar({
     Key? key,
     required VoidCallback onLeading,
+    VoidCallback? onUpdate,
   }) : super(
           key: key,
           widgetModelBuilder: (context) => createUiAppbarWidgetModel(
             context,
             onLeading,
+            onUpdate,
           ),
         );
 
@@ -38,11 +40,11 @@ class _UiAppbarState extends WidgetState<UiAppbar, UiAppbarWidgetModel> {
               builder: (context, usernameData) {
                 return Text(usernameData ?? 'Аноним');
               }),
-          // if (onUpdatePressed != null)
-          //   IconButton(
-          //     onPressed: onUpdatePressed,
-          //     icon: const Icon(Icons.refresh),
-          //   )
+          if (wm.onUpdate != null)
+            IconButton(
+              onPressed: wm.onUpdate,
+              icon: const Icon(Icons.refresh),
+            )
           // onUpdatePressed != null ? IconButton(
           //   onPressed: onUpdatePressed,
           //   icon: const Icon(Icons.refresh),

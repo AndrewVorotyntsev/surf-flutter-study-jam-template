@@ -5,11 +5,12 @@ import '../ui_appbar_wm.dart';
 
 /// Билдер для [UiAppbarWidgetModel]
 UiAppbarWidgetModel createUiAppbarWidgetModel(
-  BuildContext context, VoidCallback onLeading,{
+  BuildContext context,
+  VoidCallback onLeading,
+  VoidCallback? onUpdate, {
   NavigatorState? navigator,
 }) {
-  final wmDependencies = WidgetModelDependencies(
-  );
+  final wmDependencies = WidgetModelDependencies();
 
   navigator = navigator ?? Navigator.of(context);
 
@@ -17,6 +18,7 @@ UiAppbarWidgetModel createUiAppbarWidgetModel(
     wmDependencies,
     navigator,
     context,
-      onLeading,
+    onLeading,
+    onUpdate,
   );
 }

@@ -38,7 +38,10 @@ class _TopicsListScreenState
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(48),
-        child: UiAppbar(onLeading: wm.signOut,),
+        child: UiAppbar(
+          onLeading: wm.signOut,
+          onUpdate: wm.onUpdatePressed,
+        ),
         // child: ChatAppBar(
         //   onUpdatePressed: wm.onUpdatePressed,
         // ),

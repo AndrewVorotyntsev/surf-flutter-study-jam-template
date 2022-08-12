@@ -10,12 +10,14 @@ class UiAppbarWidgetModel extends WidgetModel {
   final EntityStreamedState<String?> usernameState =
       EntityStreamedState<String?>(null);
   final VoidCallback onLeading;
+  final VoidCallback? onUpdate;
 
   UiAppbarWidgetModel(
     WidgetModelDependencies dependencies,
     this._navigator,
     this.context,
     this.onLeading,
+      this.onUpdate,
   ) : super(dependencies);
 
   @override
