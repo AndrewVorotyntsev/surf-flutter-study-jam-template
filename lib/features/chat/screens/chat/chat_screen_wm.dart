@@ -83,6 +83,12 @@ class ChatScreenWidgetModel extends WidgetModel {
           ),
           actions: <Widget>[
             TextButton(
+              child: const Text('Отмена'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
               child: const Text('Прикрепить'),
               onPressed: () {
                 imagesToSend.add(imageController.text);
