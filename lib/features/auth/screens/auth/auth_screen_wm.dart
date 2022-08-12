@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthScreenWidgetModel extends WidgetModel {
   final NavigatorState _navigator;
   final BuildContext context;
-  final IAuthRepository repository;
+  final IAuthRepository authRepository;
   late StudyJamClient _studyJamClient;
 
   final TextEditingController loginController = TextEditingController();
@@ -23,13 +23,18 @@ class AuthScreenWidgetModel extends WidgetModel {
   AuthScreenWidgetModel(
     WidgetModelDependencies dependencies,
     this._navigator,
-    this.repository,
+    this.authRepository,
     this.context,
   ) : super(dependencies);
 
   @override
-  void onLoad() {
+  void onLoad() async {
     super.onLoad();
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('token') != null) {
+      _studyJamClient = StudyJamClient().getAuthorizedClient(prefs.getString('token')!);
+      _pushToTopics(TokenDto(token: prefs.getString('token')!));
+    }
   }
 
   @override
@@ -42,7 +47,7 @@ class AuthScreenWidgetModel extends WidgetModel {
       String login = loginController.text;
       String password = passwordController.text;
       TokenDto token =
-          await repository.signIn(login: login, password: password);
+          await authRepository.signIn(login: login, password: password);
 
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token.token);
@@ -64,20 +69,6 @@ class AuthScreenWidgetModel extends WidgetModel {
     }
   }
 
-  void _pushToChat(TokenDto token) {
-    _navigator.push(
-      MaterialPageRoute(
-        builder: (_) {
-          return ChatScreen(
-            chatRepository: ChatRepository(
-              _studyJamClient,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   void _pushToTopics(TokenDto token) {
     _navigator.push(
       MaterialPageRoute(
@@ -89,6 +80,7 @@ class AuthScreenWidgetModel extends WidgetModel {
             chatRepository: ChatRepository(
               _studyJamClient,
             ),
+            authRepository: authRepository as AuthRepository,
           );
         },
       ),

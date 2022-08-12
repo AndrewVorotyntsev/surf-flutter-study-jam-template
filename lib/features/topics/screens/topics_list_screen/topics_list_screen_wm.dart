@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_mwwm/surf_mwwm.dart';
+import 'package:surf_practice_chat_flutter/features/auth/repository/auth_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/screens/chat/chat_screen.dart';
 import 'package:surf_practice_chat_flutter/features/topics/models/chat_topic_dto.dart';
@@ -12,6 +13,7 @@ class TopicsListScreenWidgetModel extends WidgetModel {
   final NavigatorState _navigator;
   final IChatTopicsRepository topicsRepository;
   final ChatRepository chatRepository;
+  final AuthRepository authRepository;
   final currentTopics = EntityStreamedState<Iterable<ChatTopicDto>>(
       const EntityState.loading([]));
 
@@ -20,6 +22,7 @@ class TopicsListScreenWidgetModel extends WidgetModel {
     this._navigator,
     this.topicsRepository,
     this.chatRepository,
+      this.authRepository,
   ) : super(dependencies);
 
   @override
@@ -63,5 +66,9 @@ class TopicsListScreenWidgetModel extends WidgetModel {
         },
       ),
     );
+  }
+
+  void signOut() {
+    authRepository.signOut();
   }
 }

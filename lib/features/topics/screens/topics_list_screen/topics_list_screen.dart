@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_mwwm/surf_mwwm.dart';
+import 'package:surf_practice_chat_flutter/features/auth/repository/auth_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/screens/chat/widgets/chat_appbar.dart';
 import 'package:surf_practice_chat_flutter/features/topics/models/chat_topic_dto.dart';
@@ -14,12 +15,14 @@ class TopicsListScreen extends CoreMwwmWidget<TopicsListScreenWidgetModel> {
     Key? key,
     required IChatTopicsRepository topicsRepository,
     required ChatRepository chatRepository,
+    required AuthRepository authRepository,
   }) : super(
           key: key,
           widgetModelBuilder: (context) => createTopicsListScreenWidgetModel(
             context,
             topicsRepository,
             chatRepository,
+            authRepository,
           ),
         );
 
@@ -35,8 +38,7 @@ class _TopicsListScreenState
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(48),
-        child: UiAppbar(
-        ),
+        child: UiAppbar(onLeading: wm.signOut,),
         // child: ChatAppBar(
         //   onUpdatePressed: wm.onUpdatePressed,
         // ),
@@ -70,7 +72,8 @@ class _TopicsListScreenState
                           ? Text(
                               '${wm.currentTopics.value.data?.elementAt(index).description}')
                           : null,
-                      onTap: () => wm.pushToChat(wm.currentTopics.value.data?.elementAt(index).id),
+                      onTap: () => wm.pushToChat(
+                          wm.currentTopics.value.data?.elementAt(index).id),
                     ),
                   );
                 }),

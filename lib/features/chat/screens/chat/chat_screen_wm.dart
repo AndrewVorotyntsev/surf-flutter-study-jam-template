@@ -59,10 +59,6 @@ class ChatScreenWidgetModel extends WidgetModel {
       geolocation;
       final messages = await chatRepository.sendGeolocationMessage(
         location: geolocation!,
-        // ChatGeolocationDto(
-        //   longitude: 0,
-        //   latitude: 0,
-        // ), //geolocation!,
         id: id,
         message: messageText,
       );
