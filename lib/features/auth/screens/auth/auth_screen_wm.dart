@@ -4,7 +4,7 @@ import 'package:surf_practice_chat_flutter/features/auth/exceptions/auth_excepti
 import 'package:surf_practice_chat_flutter/features/auth/repository/auth_repository.dart';
 import 'package:surf_practice_chat_flutter/features/auth/models/token_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
-import 'package:surf_practice_chat_flutter/features/chat/screens/chat_screen.dart';
+import 'package:surf_practice_chat_flutter/features/chat/screens/chat/chat_screen.dart';
 import 'package:surf_study_jam/surf_study_jam.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
