@@ -15,6 +15,7 @@ class AuthScreenWidgetModel extends WidgetModel {
   final NavigatorState _navigator;
   final BuildContext context;
   final IAuthRepository repository;
+  late StudyJamClient _studyJamClient;
 
   final TextEditingController loginController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -42,11 +43,15 @@ class AuthScreenWidgetModel extends WidgetModel {
       String password = passwordController.text;
       TokenDto token =
           await repository.signIn(login: login, password: password);
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token.token);
+      _studyJamClient = StudyJamClient().getAuthorizedClient(token.token);
+
+      final localUser = await _studyJamClient.getUser();
+      await prefs.setString('username', localUser?.username ?? 'Me');
 
       _pushToTopics(token);
-      //_pushToChat(token);
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         // TODO: добавить дизайн
@@ -65,7 +70,7 @@ class AuthScreenWidgetModel extends WidgetModel {
         builder: (_) {
           return ChatScreen(
             chatRepository: ChatRepository(
-              StudyJamClient().getAuthorizedClient(token.token),
+              _studyJamClient,
             ),
           );
         },
@@ -79,10 +84,10 @@ class AuthScreenWidgetModel extends WidgetModel {
         builder: (_) {
           return TopicsListScreen(
             topicsRepository: ChatTopicsRepository(
-              StudyJamClient().getAuthorizedClient(token.token),
+              _studyJamClient,
             ),
             chatRepository: ChatRepository(
-              StudyJamClient().getAuthorizedClient(token.token),
+              _studyJamClient,
             ),
           );
         },

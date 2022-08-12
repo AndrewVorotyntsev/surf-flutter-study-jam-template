@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ChatAppBar extends StatelessWidget {
-  final VoidCallback onUpdatePressed;
+  final VoidCallback? onUpdatePressed;
 
   const ChatAppBar({
-    required this.onUpdatePressed,
+    this.onUpdatePressed,
     Key? key,
   }) : super(key: key);
 
@@ -14,10 +14,15 @@ class ChatAppBar extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          IconButton(
-            onPressed: onUpdatePressed,
-            icon: const Icon(Icons.refresh),
-          ),
+          if (onUpdatePressed != null)
+            IconButton(
+              onPressed: onUpdatePressed,
+              icon: const Icon(Icons.refresh),
+            )
+          // onUpdatePressed != null ? IconButton(
+          //   onPressed: onUpdatePressed,
+          //   icon: const Icon(Icons.refresh),
+          // ) : null,
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:surf_practice_chat_flutter/features/chat/repository/chat_reposit
 import 'package:surf_practice_chat_flutter/features/chat/screens/chat/widgets/chat_appbar.dart';
 import 'package:surf_practice_chat_flutter/features/topics/models/chat_topic_dto.dart';
 import 'package:surf_practice_chat_flutter/features/topics/repository/chart_topics_repository.dart';
+import 'package:surf_practice_chat_flutter/ui_kit/ui_appbar/ui_appbar.dart';
 import 'di/topics_list_screen_wm_builder.dart';
 import 'topics_list_screen_wm.dart';
 
@@ -31,15 +32,14 @@ class _TopicsListScreenState
     extends WidgetState<TopicsListScreen, TopicsListScreenWidgetModel> {
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: colorScheme.background,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(48),
-        child: ChatAppBar(
-          onUpdatePressed: wm.onUpdatePressed,
+        child: UiAppbar(
         ),
+        // child: ChatAppBar(
+        //   onUpdatePressed: wm.onUpdatePressed,
+        // ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
