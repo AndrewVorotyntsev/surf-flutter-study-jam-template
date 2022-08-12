@@ -32,7 +32,8 @@ class AuthScreenWidgetModel extends WidgetModel {
     super.onLoad();
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString('token') != null) {
-      _studyJamClient = StudyJamClient().getAuthorizedClient(prefs.getString('token')!);
+      _studyJamClient =
+          StudyJamClient().getAuthorizedClient(prefs.getString('token')!);
       _pushToTopics(TokenDto(token: prefs.getString('token')!));
     }
   }
@@ -44,6 +45,7 @@ class AuthScreenWidgetModel extends WidgetModel {
 
   void onButtonTap() async {
     try {
+      _openLoadingDialog(context);
       String login = loginController.text;
       String password = passwordController.text;
       TokenDto token =
@@ -55,7 +57,7 @@ class AuthScreenWidgetModel extends WidgetModel {
 
       final localUser = await _studyJamClient.getUser();
       await prefs.setString('username', localUser?.username ?? 'Me');
-
+      _navigator.pop();
       _pushToTopics(token);
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,6 +86,27 @@ class AuthScreenWidgetModel extends WidgetModel {
           );
         },
       ),
+    );
+  }
+
+  void _openLoadingDialog(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
+          content: Container(
+            height: 100,
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }
