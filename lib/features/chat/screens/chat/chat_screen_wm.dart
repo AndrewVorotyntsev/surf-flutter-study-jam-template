@@ -19,6 +19,8 @@ class ChatScreenWidgetModel extends WidgetModel {
 
   @override
   void onLoad() {
+    // Обновляем сообщения при запуске экранов
+    onUpdatePressed();
     super.onLoad();
   }
 
@@ -30,14 +32,10 @@ class ChatScreenWidgetModel extends WidgetModel {
   Future<void> onUpdatePressed() async {
     final messages = await chatRepository.getMessages();
     currentMessages.content(messages);
-    // setState
-    //_currentMessages = messages;
   }
 
   Future<void> onSendPressed(String messageText) async {
     final messages = await chatRepository.sendMessage(messageText);
     currentMessages.content(messages);
-    // setState
-    //_currentMessages = messages;
   }
 }
