@@ -56,7 +56,10 @@ class _ChatScreenState extends WidgetState<ChatScreen, ChatScreenWidgetModel> {
                   );
                 }),
           ),
-          ChatTextField(onSendPressed: wm.onSendPressed),
+          ChatTextField(
+            onSendPressed: wm.onSendPressed,
+            onImageButtonTap: wm.chooseImages,
+          ),
         ],
       ),
     );

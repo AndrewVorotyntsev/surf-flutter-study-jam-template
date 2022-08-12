@@ -14,5 +14,5 @@ ChatScreenWidgetModel createChatScreenWidgetModel(
 
   navigator = navigator ?? Navigator.of(context);
 
-  return ChatScreenWidgetModel(wmDependencies, navigator, chatRepository, id,);
+  return ChatScreenWidgetModel(wmDependencies, navigator, chatRepository, id,context);
 }

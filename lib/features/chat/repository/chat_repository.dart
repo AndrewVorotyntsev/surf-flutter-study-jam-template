@@ -32,7 +32,11 @@ abstract class IChatRepository {
   ///
   /// [message] mustn't be empty and longer than [maxMessageLength]. Throws an
   /// [InvalidMessageException].
-  Future<Iterable<ChatMessageDto>> sendMessage(String message, {int? id});
+  Future<Iterable<ChatMessageDto>> sendMessage(
+    String message, {
+    int? id,
+    List<String>? images,
+  });
 
   /// Sends the message by [location] contents. [message] is optional.
   ///
@@ -75,14 +79,18 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Future<Iterable<ChatMessageDto>> sendMessage(String message,
-      {int? id}) async {
+  Future<Iterable<ChatMessageDto>> sendMessage(
+    String message, {
+    int? id,
+     List<String>? images,
+  }) async {
     if (message.length > IChatRepository.maxMessageLength) {
       throw InvalidMessageException('Message "$message" is too large.');
     }
     await _studyJamClient.sendMessage(SjMessageSendsDto(
       text: message,
       chatId: id,
+      images: images,
     ));
 
     final messages = await _fetchAllMessages(id: id);
