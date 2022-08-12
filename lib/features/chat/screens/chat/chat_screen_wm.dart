@@ -11,10 +11,13 @@ class ChatScreenWidgetModel extends WidgetModel {
   final currentMessages =
   EntityStreamedState<Iterable<ChatMessageDto>>(const EntityState.loading([]));
 
+  int? id;
+
   ChatScreenWidgetModel(
     WidgetModelDependencies dependencies,
     this._navigator,
     this.chatRepository,
+      this.id,
   ) : super(dependencies);
 
   @override

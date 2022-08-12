@@ -6,16 +6,13 @@ import '../chat_screen_wm.dart';
 /// Билдер для [ChatScreenWidgetModel]
 ChatScreenWidgetModel createChatScreenWidgetModel(
   BuildContext context,
-  IChatRepository chatRepository, {
+  IChatRepository chatRepository,
+  int? id, {
   NavigatorState? navigator,
 }) {
   final wmDependencies = WidgetModelDependencies();
 
   navigator = navigator ?? Navigator.of(context);
 
-  return ChatScreenWidgetModel(
-    wmDependencies,
-    navigator,
-    chatRepository
-  );
+  return ChatScreenWidgetModel(wmDependencies, navigator, chatRepository, id,);
 }

@@ -81,6 +81,9 @@ class AuthScreenWidgetModel extends WidgetModel {
             topicsRepository: ChatTopicsRepository(
               StudyJamClient().getAuthorizedClient(token.token),
             ),
+            chatRepository: ChatRepository(
+              StudyJamClient().getAuthorizedClient(token.token),
+            ),
           );
         },
       ),

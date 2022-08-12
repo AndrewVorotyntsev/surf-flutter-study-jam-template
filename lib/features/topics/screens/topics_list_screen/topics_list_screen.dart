@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surf_mwwm/surf_mwwm.dart';
+import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/screens/chat/widgets/chat_appbar.dart';
 import 'package:surf_practice_chat_flutter/features/topics/models/chat_topic_dto.dart';
 import 'package:surf_practice_chat_flutter/features/topics/repository/chart_topics_repository.dart';
@@ -11,19 +12,15 @@ class TopicsListScreen extends CoreMwwmWidget<TopicsListScreenWidgetModel> {
   TopicsListScreen({
     Key? key,
     required IChatTopicsRepository topicsRepository,
+    required ChatRepository chatRepository,
   }) : super(
           key: key,
           widgetModelBuilder: (context) => createTopicsListScreenWidgetModel(
             context,
             topicsRepository,
+            chatRepository,
           ),
         );
-  //   WidgetModelBuilder<TopicsListScreenWidgetModel> widgetModelBuilder =
-  //       createTopicsListScreenWidgetModel,
-  // }) : super(
-  //         key: key,
-  //         widgetModelBuilder: widgetModelBuilder,
-  //       );
 
   _TopicsListScreenState createWidgetState() {
     return _TopicsListScreenState();
@@ -43,6 +40,10 @@ class _TopicsListScreenState
         child: ChatAppBar(
           onUpdatePressed: wm.onUpdatePressed,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: wm.pushToCreateTopic,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

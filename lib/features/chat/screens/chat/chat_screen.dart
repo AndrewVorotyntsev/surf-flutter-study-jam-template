@@ -12,12 +12,14 @@ import 'chat_screen_wm.dart';
 class ChatScreen extends CoreMwwmWidget<ChatScreenWidgetModel> {
   ChatScreen({
     Key? key,
+    int? id,
     required IChatRepository chatRepository,
   }) : super(
           key: key,
           widgetModelBuilder: (context) => createChatScreenWidgetModel(
             context,
             chatRepository,
+              id,
           ),
         );
 

@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:surf_mwwm/surf_mwwm.dart';
-import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:surf_practice_chat_flutter/features/topics/repository/chart_topics_repository.dart';
-import '../topics_list_screen_wm.dart';
+import '../create_topic_screen_wm.dart';
 
-/// Билдер для [TopicsListScreenWidgetModel]
-TopicsListScreenWidgetModel createTopicsListScreenWidgetModel(
+/// Билдер для [CreateTopicScreenWidgetModel]
+CreateTopicScreenWidgetModel createCreateTopicScreenWidgetModel(
   BuildContext context,
-  IChatTopicsRepository topicsRepository,
-  ChatRepository chatRepository, {
+  IChatTopicsRepository topicsRepository, {
   NavigatorState? navigator,
 }) {
   final wmDependencies = WidgetModelDependencies();
 
   navigator = navigator ?? Navigator.of(context);
 
-  return TopicsListScreenWidgetModel(
+  return CreateTopicScreenWidgetModel(
     wmDependencies,
     navigator,
     topicsRepository,
-    chatRepository,
   );
 }
