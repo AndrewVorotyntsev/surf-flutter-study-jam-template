@@ -1,6 +1,7 @@
 import 'package:surf_practice_chat_flutter/features/chat/exceptions/invalid_message_exception.dart';
 import 'package:surf_practice_chat_flutter/features/chat/exceptions/user_not_found_exception.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_geolocation_geolocation_dto.dart';
+import 'package:surf_practice_chat_flutter/features/chat/models/chat_image_geolocation_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_image_message_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_location_dto.dart';
@@ -82,7 +83,7 @@ class ChatRepository implements IChatRepository {
   Future<Iterable<ChatMessageDto>> sendMessage(
     String message, {
     int? id,
-     List<String>? images,
+    List<String>? images,
   }) async {
     if (message.length > IChatRepository.maxMessageLength) {
       throw InvalidMessageException('Message "$message" is too large.');
@@ -162,35 +163,59 @@ class ChatRepository implements IChatRepository {
     final localUser = await _studyJamClient.getUser();
 
     return messages
-        .map(
-          (sjMessageDto) => sjMessageDto.geopoint == null
-              ? sjMessageDto.images != null
-                  ? ChatImageMessageDto.fromSJClient(
-                      sjMessageDto: sjMessageDto,
-                      sjUserDto: users.firstWhere(
-                          (userDto) => userDto.id == sjMessageDto.userId),
-                      isUserLocal: users
-                              .firstWhere((userDto) =>
-                                  userDto.id == sjMessageDto.userId)
-                              .id ==
-                          localUser?.id,
-                    )
-                  : ChatMessageDto.fromSJClient(
-                      sjMessageDto: sjMessageDto,
-                      sjUserDto: users.firstWhere(
-                          (userDto) => userDto.id == sjMessageDto.userId),
-                      isUserLocal: users
-                              .firstWhere((userDto) =>
-                                  userDto.id == sjMessageDto.userId)
-                              .id ==
-                          localUser?.id,
-                    )
-              : ChatMessageGeolocationDto.fromSJClient(
-                  sjMessageDto: sjMessageDto,
-                  sjUserDto: users.firstWhere(
-                      (userDto) => userDto.id == sjMessageDto.userId),
-                ),
-        )
+        .map((sjMessageDto) => sjMessageDto.geopoint == null
+                ? sjMessageDto.images != null
+                    // Сообщение с изображением
+                    ? ChatImageMessageDto.fromSJClient(
+                        sjMessageDto: sjMessageDto,
+                        sjUserDto: users.firstWhere(
+                            (userDto) => userDto.id == sjMessageDto.userId),
+                        isUserLocal: users
+                                .firstWhere((userDto) =>
+                                    userDto.id == sjMessageDto.userId)
+                                .id ==
+                            localUser?.id,
+                      )
+                    // Сообщение с текстом
+                    : ChatMessageDto.fromSJClient(
+                        sjMessageDto: sjMessageDto,
+                        sjUserDto: users.firstWhere(
+                            (userDto) => userDto.id == sjMessageDto.userId),
+                        isUserLocal: users
+                                .firstWhere((userDto) =>
+                                    userDto.id == sjMessageDto.userId)
+                                .id ==
+                            localUser?.id,
+                      )
+                : sjMessageDto.images != null
+                    // Сообщение с геолокацией и изображением
+                    ? ChatImageGeoMessageDto.fromSJClient(
+                        sjMessageDto: sjMessageDto,
+                        sjUserDto: users.firstWhere(
+                            (userDto) => userDto.id == sjMessageDto.userId),
+                        isUserLocal: users
+                                .firstWhere((userDto) =>
+                                    userDto.id == sjMessageDto.userId)
+                                .id ==
+                            localUser?.id,
+                      )
+                    // Сообщение с геолокацией
+                    : ChatMessageDto.fromSJClient(
+                        sjMessageDto: sjMessageDto,
+                        sjUserDto: users.firstWhere(
+                            (userDto) => userDto.id == sjMessageDto.userId),
+                        isUserLocal: users
+                                .firstWhere((userDto) =>
+                                    userDto.id == sjMessageDto.userId)
+                                .id ==
+                            localUser?.id,
+                      )
+            //     : ChatMessageGeolocationDto.fromSJClient(
+            //         sjMessageDto: sjMessageDto,
+            //         sjUserDto: users.firstWhere(
+            //             (userDto) => userDto.id == sjMessageDto.userId),
+            //       ),
+            )
         .toList();
   }
 }

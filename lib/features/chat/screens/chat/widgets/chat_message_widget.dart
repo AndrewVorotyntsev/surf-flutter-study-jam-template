@@ -1,6 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:surf_practice_chat_flutter/features/chat/models/chat_image_geolocation_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_image_message_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/models/chat_message_location_dto.dart';
@@ -51,7 +52,8 @@ class ChatMessage extends StatelessWidget {
                     ],
                   ),
                 ),
-                chatMessageData is ChatMessageGeolocationDto
+                chatMessageData is ChatMessageGeolocationDto ||
+                        chatMessageData is ChatImageGeoMessageDto
                     ? IconButton(
                         icon: Icon(Icons.map_outlined),
                         onPressed: () async {
@@ -72,7 +74,8 @@ class ChatMessage extends StatelessWidget {
                     : SizedBox.shrink(),
               ],
             ),
-            chatMessageData is ChatImageMessageDto
+            chatMessageData is ChatImageMessageDto ||
+                    chatMessageData is ChatImageGeoMessageDto
                 ? Container(
                     height: 200,
                     child: Swiper(
@@ -85,7 +88,8 @@ class ChatMessage extends StatelessWidget {
                         return Container(
                           child: Image.network(
                             getImages(chatMessageData)[i],
-                            errorBuilder: (_, __, ___) => Text('Изображение не загружено'),
+                            errorBuilder: (_, __, ___) =>
+                                Text('Изображение не загружено'),
                             // loadingBuilder: (_, __, ice) {
                             //   if (ice?.expectedTotalBytes != ice?.cumulativeBytesLoaded) {
                             //     return CupertinoActivityIndicator();
@@ -107,7 +111,12 @@ class ChatMessage extends StatelessWidget {
   }
 
   List<String> getImages(ChatMessageDto data) {
-    ChatImageMessageDto imageMessageDto = data as ChatImageMessageDto;
-    return imageMessageDto.images;
+    try{
+      ChatImageMessageDto imageMessageDto = data as ChatImageMessageDto;
+      return imageMessageDto.images;
+    } catch (_) {
+      ChatImageGeoMessageDto imageMessageDto = data as ChatImageGeoMessageDto;
+      return imageMessageDto.images;
+    }
   }
 }
