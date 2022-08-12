@@ -105,14 +105,6 @@ class ChatScreenWidgetModel extends WidgetModel {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Определяем месторасположение'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Отмена'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
         );
       },
     );
