@@ -45,10 +45,6 @@ class _UiAppbarState extends WidgetState<UiAppbar, UiAppbarWidgetModel> {
               onPressed: wm.onUpdate,
               icon: const Icon(Icons.refresh),
             )
-          // onUpdatePressed != null ? IconButton(
-          //   onPressed: onUpdatePressed,
-          //   icon: const Icon(Icons.refresh),
-          // ) : null,
         ],
       ),
     );

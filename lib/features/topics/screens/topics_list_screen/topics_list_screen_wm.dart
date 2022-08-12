@@ -22,7 +22,7 @@ class TopicsListScreenWidgetModel extends WidgetModel {
     this._navigator,
     this.topicsRepository,
     this.chatRepository,
-      this.authRepository,
+    this.authRepository,
   ) : super(dependencies);
 
   @override
@@ -38,13 +38,15 @@ class TopicsListScreenWidgetModel extends WidgetModel {
 
   Future<void> onUpdatePressed() async {
     final topics = await topicsRepository.getTopics(
-        topicsStartDate: DateTime(2022, 8, 10)); // as List<ChatTopicDto>;
+      topicsStartDate: DateTime(2022, 8, 10),
+    ); // as List<ChatTopicDto>;
     print(topics);
     currentTopics.content(topics);
   }
 
-  void pushToCreateTopic() {
-    _navigator.push(
+  void pushToCreateTopic() async {
+    // Ожидаем закрытие экрана
+    await _navigator.push(
       MaterialPageRoute(
         builder: (_) {
           return CreateTopicScreen(
@@ -53,6 +55,8 @@ class TopicsListScreenWidgetModel extends WidgetModel {
         },
       ),
     );
+    // Обновляем список топиков
+    onUpdatePressed();
   }
 
   void pushToChat(int? id) {
