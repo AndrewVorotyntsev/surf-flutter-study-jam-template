@@ -98,11 +98,31 @@ class ChatScreenWidgetModel extends WidgetModel {
   }
 
   void pinGeo() async {
+    // Заглушка на время загрузки геолокатора
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Определяем месторасположение'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Отмена'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
     Position position = await _determinePosition();
+    Navigator.pop(context);
 
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Прикрепить геолокацию?'),
