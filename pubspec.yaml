@@ -19,6 +19,7 @@ dependencies:
   shared_preferences: ^2.0.15
   bubble: ^1.2.1
   url_launcher: ^6.1.5
+  card_swiper: ^2.0.4
 
 dev_dependencies:
   flutter_test:

@@ -15,7 +15,7 @@ class ChatBody extends StatelessWidget {
     return ListView.builder(
       itemCount: messages.length,
       itemBuilder: (_, index) => ChatMessage(
-        chatData: messages.elementAt(index),
+        chatMessageData: messages.elementAt(index),
       ),
     );
   }
