@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ChatTextField extends StatelessWidget {
   final ValueChanged<String> onSendPressed;
   final VoidCallback onImageButtonTap;
+  final VoidCallback onMapButtonTap;
 
   final _textEditingController = TextEditingController();
 
   ChatTextField({
     required this.onSendPressed,
     required this.onImageButtonTap,
+    required this.onMapButtonTap,
     Key? key,
   }) : super(key: key);
 
@@ -34,6 +36,11 @@ class ChatTextField extends StatelessWidget {
                   hintText: 'Сообщение',
                 ),
               ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.pin_drop),
+              color: colorScheme.onSurface,
+              onPressed: onMapButtonTap,
             ),
             IconButton(
               icon: const Icon(Icons.image),

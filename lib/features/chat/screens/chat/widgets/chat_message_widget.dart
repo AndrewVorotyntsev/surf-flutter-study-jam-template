@@ -53,7 +53,7 @@ class ChatMessage extends StatelessWidget {
                 ),
                 chatMessageData is ChatMessageGeolocationDto
                     ? IconButton(
-                        icon: Icon(Icons.pin_drop),
+                        icon: Icon(Icons.map_outlined),
                         onPressed: () async {
                           ChatMessageGeolocationDto data =
                               chatMessageData as ChatMessageGeolocationDto;
