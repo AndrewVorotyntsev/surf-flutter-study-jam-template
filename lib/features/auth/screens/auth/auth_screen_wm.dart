@@ -5,6 +5,8 @@ import 'package:surf_practice_chat_flutter/features/auth/repository/auth_reposit
 import 'package:surf_practice_chat_flutter/features/auth/models/token_dto.dart';
 import 'package:surf_practice_chat_flutter/features/chat/repository/chat_repository.dart';
 import 'package:surf_practice_chat_flutter/features/chat/screens/chat/chat_screen.dart';
+import 'package:surf_practice_chat_flutter/features/topics/repository/chart_topics_repository.dart';
+import 'package:surf_practice_chat_flutter/features/topics/screens/topics_list_screen/topics_list_screen.dart';
 import 'package:surf_study_jam/surf_study_jam.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,7 +45,8 @@ class AuthScreenWidgetModel extends WidgetModel {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token.token);
 
-      _pushToChat(token);
+      _pushToTopics(token);
+      //_pushToChat(token);
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         // TODO: добавить дизайн
@@ -68,32 +71,19 @@ class AuthScreenWidgetModel extends WidgetModel {
         },
       ),
     );
-    // Navigator.push<ChatScreen>(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return ChatScreen(
-    //         chatRepository: ChatRepository(
-    //           StudyJamClient().getAuthorizedClient(token.token),
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
   }
 
-  // void _pushToChat(BuildContext context, TokenDto token) {
-  //   Navigator.push<ChatScreen>(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (_) {
-  //         return ChatScreen(
-  //           chatRepository: ChatRepository(
-  //             StudyJamClient().getAuthorizedClient(token.token),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  void _pushToTopics(TokenDto token) {
+    _navigator.push(
+      MaterialPageRoute(
+        builder: (_) {
+          return TopicsListScreen(
+            topicsRepository: ChatTopicsRepository(
+              StudyJamClient().getAuthorizedClient(token.token),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }

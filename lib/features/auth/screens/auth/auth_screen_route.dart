@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
-import 'auth_screen.dart';
+// TODO: удалить
+
+// import 'package:flutter/material.dart';
+// import 'auth_screen.dart';
 
 // /// Роут для [AuthScreen]
 // class AuthScreenRoute extends MaterialPageRoute {

@@ -36,7 +36,6 @@ class _ChatScreenState extends WidgetState<ChatScreen, ChatScreenWidgetModel> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(48),
         child: ChatAppBar(
-          controller: wm.nameEditingController,
           onUpdatePressed: wm.onUpdatePressed,
         ),
       ),
